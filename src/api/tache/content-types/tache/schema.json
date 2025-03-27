@@ -1,1 +1,50 @@
- 
+ {
+  "kind": "collectionType",
+  "collectionName": "taches",
+  "info": {
+    "singularName": "tache",
+    "pluralName": "taches",
+    "displayName": "Tache",
+    "description": "Task management collection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "minLength": 1
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "start_date": {
+      "type": "date",
+      "required": true
+    },
+    "due_date": {
+      "type": "date",
+      "required": true
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    },
+    "priority": {
+      "type": "enumeration",
+      "enum": ["low", "normal", "urgent"],
+      "default": "normal",
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "taches"
+    }
+  }
+  
+}

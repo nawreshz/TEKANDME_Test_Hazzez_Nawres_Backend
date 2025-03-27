@@ -365,13 +365,13 @@ export interface AdminUser extends Schema.CollectionType {
 export interface ApiTacheTache extends Schema.CollectionType {
   collectionName: 'taches';
   info: {
-    description: '';
-    displayName: 'tache';
+    description: 'Task management collection';
+    displayName: 'Tache';
     pluralName: 'taches';
     singularName: 'tache';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
     completed: Attribute.Boolean & Attribute.DefaultTo<false>;
@@ -382,11 +382,18 @@ export interface ApiTacheTache extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
-    description: Attribute.Text;
-    due_date: Attribute.Date;
-    priority: Attribute.Enumeration<['low', 'urgent', 'normal']>;
-    start_date: Attribute.Date;
-    title: Attribute.String;
+    description: Attribute.Text & Attribute.Required;
+    due_date: Attribute.Date & Attribute.Required;
+    priority: Attribute.Enumeration<['low', 'normal', 'urgent']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'normal'>;
+    publishedAt: Attribute.DateTime;
+    start_date: Attribute.Date & Attribute.Required;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::tache.tache',
